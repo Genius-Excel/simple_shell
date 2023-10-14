@@ -1,0 +1,192 @@
+#include "shell.h"
+
+/**
+* main - this is the main function for my shell program.
+* Return: 0 on sucess.
+*/
+
+int main(void);
+
+int main(void)
+{
+	bool interactive_shell;
+
+	char *get_line_val;
+
+	char **cmd_args;
+
+	char *token;
+
+	char *file_path = "/bin/";
+
+
+	int arg_idx;
+
+	char executable_file[MAX_INPUT_SIZE];
+
+	char currt_wrk_dir[MAX_INPUT_SIZE];
+
+	char *usr_prmpt = "$ ";
+
+	interactive_shell = isatty(fileno(stdin));
+
+	getcwd(currt_wrk_dir, sizeof(currt_wrk_dir));
+
+	while (1)
+	{
+
+		/*check for interactive shell mode*/
+		if (interactive_shell)
+		{
+			_printf("%s", usr_prmpt);
+
+			fflush(stdout);
+
+			get_line_val = cstm_getline();
+
+			if (get_line_val == NULL)
+			{
+				break; /*Exit interactive mode*/
+			}
+
+			/*printf("(Favour Shell)%s$ ", currt_wrk_dir); */
+		}
+		else /*Indicates shell is in non-interactive mode*/
+		{
+			get_line_val = cstm_non_interactive_getline();
+
+			if (get_line_val == NULL) /*Exit non-interactive mode*/
+			{
+				/*Close file and exit the non-interacitve mode*/
+
+				break; /*Switche to interactive shell mode*/
+			}
+		}
+
+		/*Check if multiple commands were enetered*/
+		if (strstr(get_line_val, ";") != NULL)
+		{
+			cmd_seperator(get_line_val, currt_wrk_dir, usr_prmpt);
+
+			free(get_line_val);
+			continue;
+		}
+		/*Dynamically Allocate memory for the arguments to be executed*/
+		cmd_args = malloc(sizeof(char *) * (MAX_ARGS + 1));
+
+		if (cmd_args == NULL)
+		{
+			perror("Failed to Allocate Memory");
+			exit(EXIT_FAILURE);
+		}
+
+
+		arg_idx = 0;
+
+		token = cstm_strtok(get_line_val, " \n\t");
+
+		while (token != NULL && arg_idx < MAX_ARGS)
+		{
+			cmd_args[arg_idx] = token;
+
+			arg_idx++;
+
+			token = cstm_strtok(NULL, " \n\t");
+		}
+
+		cmd_args[arg_idx] = NULL;
+
+		if (arg_idx == 0)
+		{
+			free(get_line_val);
+			free(cmd_args);
+
+			continue;
+		}
+
+		if (strcmp(cmd_args[0], "exit") == 0)
+		{
+
+			/*check for file mode before exiting the shell*/
+			/*Free memory of getline buffer before exit*/
+			free(get_line_val);
+			free(cmd_args);
+			exit(0);
+		}
+		else if (strcmp(cmd_args[0], "cd") == 0)
+		{
+
+			/*Check for too many arguments*/
+			if (arg_idx > 2)
+			{
+				_printf("bash: cd: too many arguments\n");
+			}
+			else
+			{
+				change_dir(cmd_args, currt_wrk_dir);
+			}
+
+			/*Free getline buffer*/
+			free(get_line_val);
+			free(cmd_args);
+
+			continue;
+		}
+		else if (strcmp(cmd_args[0], "env") == 0)
+		{
+			char **env;
+
+			for (env = environ; *env != NULL; env++)
+			{
+				_printf("%s\n", *env);
+			}
+			free(get_line_val);
+			free(cmd_args);
+
+			continue;
+		}
+		else if (strcmp(cmd_args[0], "#") == 0) /*This is a comment*/
+		{
+			free(get_line_val);
+			free(cmd_args); /*Free allocated memories*/
+
+			continue; /*prompt again cause user type comment*/
+		}
+
+		if (strchr(cmd_args[0], '/') != NULL) /*USer entered full path*/
+		{
+			if (access(cmd_args[0], X_OK) != -1)
+			{
+				call_and_execute(cmd_args);
+			}
+			else
+			{
+				_printf("bash: %s: No such file or directory\n", cmd_args[0]);
+			}
+		}
+		else /*User entered the file name*/
+		{
+			strcpy(executable_file, file_path);
+			strcat(executable_file, cmd_args[0]);
+
+			if (access(executable_file, X_OK) != -1)
+			{
+				call_and_execute(cmd_args);
+			}
+			else
+			{
+				_printf("bash: %s: command not found\n", cmd_args[0]);
+			}
+		}
+
+		free(get_line_val);
+		free(cmd_args);
+
+		if (!interactive_shell)
+		{
+			break;
+		}
+	}
+
+	return (0);
+}
