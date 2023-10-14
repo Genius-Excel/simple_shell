@@ -1,0 +1,93 @@
+#include "shell.h"
+#include <errno.h>
+
+/**
+ * call_and_execute - Execute the given command and handle exit status
+ * @args: Command line arguments to execute
+ */
+void call_and_execute(char *args[])
+{
+    pid_t pid_fork_val;
+    int wt_status;
+
+    pid_fork_val = fork();
+
+    if (pid_fork_val == -1)
+    {
+        perror("Fork Error");
+        exit(EXIT_FAILURE);
+    }
+
+    if (pid_fork_val == 0)
+    {
+        /* Child process*/
+
+        /* Check if the command contains a '/'*/
+        if (strchr(args[0], '/') != NULL)
+        {
+            /* Execute the command directly with its full path*/
+            if (execve(args[0], args, environ) == -1)
+	    {	
+            /* If execve fails, print an error and exit with status 1*/
+            	perror("Error from execve");
+            	exit(EXIT_FAILURE);
+	    }
+        }
+        else
+        {
+            char *path = cstm_getenv("PATH");
+            char *token = cstm_strtok(path, ":");
+
+            while (token != NULL)
+            {
+                char executable_file[MAX_INPUT_SIZE];
+
+                strcpy(executable_file, token);
+                strcat(executable_file, "/");
+                strcat(executable_file, args[0]);
+
+                if (access(executable_file, X_OK) != -1)
+                {
+                    /* Execute the command using the found path*/
+                    execve(executable_file, args, environ);
+                }
+		else
+		{
+			perror("");
+		}
+
+                token = cstm_strtok(NULL, ":");
+            }
+            /* If no compatible search is found, exit with status 1*/
+            perror("No compatible search");
+            exit(EXIT_FAILURE);
+        }
+    }
+    else
+    {
+        /*Parent process*/
+        do
+        {
+            /* Wait for the child process to complete and get its exit status*/
+            if (waitpid(pid_fork_val, &wt_status, 0) == -1)
+            {
+                perror("Waitpid Error");
+                exit(EXIT_FAILURE);
+            }
+
+            /* Check if the child process exited normally*/
+            if (WIFEXITED(wt_status))
+            {
+                /* Exit with the same status as the child process*/
+                exit(WEXITSTATUS(wt_status));
+            }
+            /* Check if the child process was terminated by a signal*/
+            else if (WIFSIGNALED(wt_status))
+            {
+                /* Exit with the same signal as the child process*/
+                raise(WTERMSIG(wt_status));
+            }
+        } while (!WIFEXITED(wt_status) && !WIFSIGNALED(wt_status));
+    }
+}
+
