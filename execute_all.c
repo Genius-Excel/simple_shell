@@ -16,7 +16,7 @@ void execute_builtin_command(char **cmd_args)
 
 			if (strcmp(cmd_args[1], "-98") == 0)
 			{
-				fprintf(stderr,"./hsh: %d: %s: Illegal number: %s\n", 1, cmd_args[0], cmd_args[1]);
+				_fprintf(stderr,"./hsh: %d: %s: Illegal number: %s\n", 1, cmd_args[0], cmd_args[1]);
 				free(cmd_args);
 				exit(2);
 			}
@@ -28,7 +28,7 @@ void execute_builtin_command(char **cmd_args)
 			}
 			else
 			{
-				fprintf(stderr,"./hsh: %d: %s: Illegal number: %s\n", 1, cmd_args[0], cmd_args[1]);
+				_fprintf(stderr,"./hsh: %d: %s: Illegal number: %s\n", 1, cmd_args[0], cmd_args[1]);
 				free(cmd_args);
 				exit(2);
 			}
@@ -58,7 +58,7 @@ void execute_builtin_command(char **cmd_args)
 		}
 		else /*Validate argument usage*/
 		{
-			fprintf(stderr, "setenv: usage: setenv VARIABLE VALUE\n");
+			_fprintf(stderr, "setenv: usage: setenv VARIABLE VALUE\n");
 		}
 	}
 	else if (strcmp(cmd_args[0], "unsetenv") == 0)
@@ -73,7 +73,7 @@ void execute_builtin_command(char **cmd_args)
 		}
 		else /*Check for argument usage*/
 		{
-			fprintf(stderr, "unsetenv: usage: unsetenv VARIABLE\n");
+			_fprintf(stderr, "unsetenv: usage: unsetenv VARIABLE\n");
 		}
 	}
 	else if (strcmp(cmd_args[0], "cd") == 0)
@@ -107,7 +107,7 @@ void execute_builtin_command(char **cmd_args)
 			}
 			else
 			{
-				fprintf(stderr, "./hsh: %d: %s: not found\n", 1, cmd_args[0]);
+				_fprintf(stderr, "./hsh: %d: %s: not found\n", 1, cmd_args[0]);
 				exit(127);
 			}
 		}
@@ -122,7 +122,7 @@ void execute_builtin_command(char **cmd_args)
 			}
 			else
 			{
-				fprintf(stderr,"./hsh: %d: %s: not found\n", 1, cmd_args[0]);
+				_fprintf(stderr,"./hsh: %d: %s: not found\n", 1, cmd_args[0]);
 				exit(127);
 			}
 		}
