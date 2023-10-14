@@ -46,7 +46,7 @@ void call_and_execute(char *args[])
 
 				token = cstm_strtok(NULL, ":");
 			}
-			fprintf(stderr,"./hsh: %d: %s: not found\n", 1, args[0]);
+			_fprintf(stderr,"./hsh: %d: %s: not found\n", 1, args[0]);
 			exit(127);
 		}
 	}
