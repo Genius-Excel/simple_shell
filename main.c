@@ -19,33 +19,10 @@ int main(void)
 
 	int arg_idx;
 
-/*	char currt_wrk_dir[MAX_INPUT_SIZE];*/
-
-/*	char user_prompt[MAX_INPUT_SIZE]; */
-
 	char *usr_prmpt = "(Genius Excel)$ ";
-
-/*	int file_dp;*/
 
 	interactive_shell = isatty(fileno(stdin));
 
-/*	file_dp = fileno(stdin);*/
-
-
-	/*getcwd(currt_wrk_dir, sizeof(currt_wrk_dir));*/
-
-/*
-*	if (!interactive_shell && argc > 1)
-*	{
-*		file_dp = open(argv[1], O_RDONLY);
-*
-*		if (file_dp == -1)
-*		{
-*			perror("Failed to open file");
-*			exit(EXIT_FAILURE);
-*		}
-*	}
-*/
 
 	while (1)
 	{
