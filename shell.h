@@ -42,7 +42,7 @@ int _putchar(char c);
 int err_putchar(char c);
 int _strlen(char *str);
 void print_integer(int val);
-int _fprintf(FILE *stream __attribute__((__unused__)), const char *format, ...);
+int _fprintf(FILE *stream, const char *format, ...);
 int _integer_length(int integer);
 
 
