@@ -76,49 +76,15 @@ void execute_builtin_command(char **cmd_args)
 	}
 	else if (strcmp(cmd_args[0], "setenv") == 0)
 	{
-		if (cmd_args[1] != NULL && cmd_args[2] != NULL)
-		{
-			if (shell_setenv(cmd_args[1], cmd_args[2]) == -1)
-			{
-				/*Output error for shell_setenv failed*/
-			}
-		}
-		else /*Validate argument usage*/
-		{
-			_fprintf(stderr, "setenv: usage: setenv VARIABLE VALUE\n");
-		}
+		/*Logic to be implemented*/
 	}
 	else if (strcmp(cmd_args[0], "unsetenv") == 0)
 	{
-		if (cmd_args[1] != NULL)
-		{
-			/*Check if unsetenv return seccessfully.*/
-			if (shell_unsetenv(cmd_args[1]) == -1)
-			{
-				/*Display appropiate error message*/
-			}
-		}
-		else /*Check for argument usage*/
-		{
-			_fprintf(stderr, "unsetenv: usage: unsetenv VARIABLE\n");
-		}
+		/*Logic to be implemented*/
 	}
 	else if (strcmp(cmd_args[0], "cd") == 0)
 	{
-		if (cmd_args[1] != NULL)
-		{
-			if (shell_cd(cmd_args[1]) == -1)
-			{
-				/*cd failed, output error*/
-			}
-		}
-		else
-		{
-			if (shell_cd(NULL) == -1)
-			{
-				/*cd failed.*/
-			}
-		}
+		/*Logic to be implemented*/
 	}
 	else if (strcmp(cmd_args[0], "#") == 0)
 	{
