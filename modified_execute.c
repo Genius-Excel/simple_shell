@@ -1,5 +1,10 @@
 #include "shell.h"
 
+/**
+* call_and_execute - Execute the given command and handle exit status
+* @args: Command line arguments to execute
+*/
+
 void call_and_execute(char *args[]);
 
 void call_and_execute(char *args[])
@@ -35,6 +40,7 @@ void call_and_execute(char *args[])
 			while (token != NULL)
 			{
 				char executable_file[MAX_INPUT_SIZE];
+
 				strcpy(executable_file, token);
 				strcat(executable_file, "/");
 				strcat(executable_file, args[0]);
@@ -46,7 +52,7 @@ void call_and_execute(char *args[])
 
 				token = cstm_strtok(NULL, ":");
 			}
-			_fprintf(stderr,"./hsh: %d: %s: not found\n", 1, args[0]);
+			_fprintf(stderr, "./hsh: %d: %s: not found\n", 1, args[0]);
 			exit(127);
 		}
 	}
