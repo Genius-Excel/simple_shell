@@ -1,5 +1,15 @@
 #include "shell.h"
 
+/**
+* execute_builtin_command - this function handles every logic
+* it checks for buitin commands and calls the executor function.
+* @cmd_args: this is the command arguments to be checked.
+*
+* Return: void
+*/
+
+void execute_builtin_command(char **cmd_args);
+
 void execute_builtin_command(char **cmd_args)
 {
 	char executable_file[MAX_INPUT_SIZE];
@@ -16,7 +26,15 @@ void execute_builtin_command(char **cmd_args)
 
 			if (strcmp(cmd_args[1], "-98") == 0)
 			{
-				_fprintf(stderr,"./hsh: %d: %s: Illegal number: %s\n", 1, cmd_args[0], cmd_args[1]);
+				char *a = cmd_args[0];
+
+				char *b = cmd_args[1];
+
+				int n = 1;
+
+				char *ms = "./hsh: %d: %s: Illegal number: %s\n";
+
+				_fprintf(stderr, ms, n, a, b);
 				free(cmd_args);
 				exit(2);
 			}
@@ -28,7 +46,15 @@ void execute_builtin_command(char **cmd_args)
 			}
 			else
 			{
-				_fprintf(stderr,"./hsh: %d: %s: Illegal number: %s\n", 1, cmd_args[0], cmd_args[1]);
+				char *a = cmd_args[0];
+
+				char *b = cmd_args[1];
+
+				int n = 1;
+
+				char *ms = "./hsh: %d: %s: Illegal number: %s\n";
+
+				_fprintf(stderr, ms, n, a, b);
 				free(cmd_args);
 				exit(2);
 			}
@@ -42,6 +68,7 @@ void execute_builtin_command(char **cmd_args)
 	else if (strcmp(cmd_args[0], "env") == 0)
 	{
 		char **env;
+
 		for (env = environ; *env != NULL; env++)
 		{
 			_printf("%s\n", *env);
@@ -107,7 +134,11 @@ void execute_builtin_command(char **cmd_args)
 			}
 			else
 			{
-				_fprintf(stderr, "./hsh: %d: %s: not found\n", 1, cmd_args[0]);
+				int n = 1;
+
+				char *ms = "./hsh: %d: %s: not found\n";
+
+				_fprintf(stderr, ms, n, cmd_args[0]);
 				exit(127);
 			}
 		}
@@ -122,7 +153,9 @@ void execute_builtin_command(char **cmd_args)
 			}
 			else
 			{
-				_fprintf(stderr,"./hsh: %d: %s: not found\n", 1, cmd_args[0]);
+				char *ms = "./hsh: %d: %s: not found\n";
+
+				_fprintf(stderr, ms, 1, cmd_args[0]);
 				exit(127);
 			}
 		}
