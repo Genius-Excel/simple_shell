@@ -1,5 +1,14 @@
 #include "shell.h"
 
+/**
+* _fprintf - this function is written for the sole purpose of
+* handling the error output.
+* @stream: file stream / file descriptor.
+* @format: format specifer arguments.
+*
+* Return: total length of characters printed.
+*/
+
 int _fprintf(FILE *stream __attribute__((__unused__)), const char *format, ...)
 {
 	int i;
