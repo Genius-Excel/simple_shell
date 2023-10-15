@@ -1,7 +1,7 @@
 #include "shell.h"
 
 /**
-* _putchar - this function prints a single character to the standard
+* err_putchar - this function prints a single character to the standard
 * error.
 * @c: character to be printed to stderr
 * Return: printed character.
