@@ -9,13 +9,17 @@
 * Return: total length of characters printed.
 */
 
-int _fprintf(FILE *stream __attribute__((__unused__)), const char *format, ...)
+int _fprintf(FILE *stream, const char *format, ...);
+
+int _fprintf(FILE *stream, const char *format, ...)
 {
 	int i;
 
 	int printed_chars = 0;
 
 	va_list specifier_args;
+
+	(void)stream;
 
 	va_start(specifier_args, format);
 
@@ -38,7 +42,7 @@ int _fprintf(FILE *stream __attribute__((__unused__)), const char *format, ...)
 					err_putchar(c_val);
 					printed_chars += 1;
 				}
-				
+
 			}
 			else if (format[i] == 's')
 			{
