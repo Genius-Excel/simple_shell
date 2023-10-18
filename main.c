@@ -96,61 +96,7 @@ int main(void)
 			continue;
 		}
 
-		if (strcmp(cmd_args[0], "exit") == 0)
-		{
-			if (cmd_args[1] != NULL)
-			{
-				char *endptr;
-
-				long status = strtol(cmd_args[1], &endptr, 10);
-
-				if (strcmp(cmd_args[1], "-98") == 0)
-				{
-					char *a = cmd_args[0];
-
-					char *b = cmd_args[1];
-
-					int n = 1;
-
-					char *ms = "./hsh: %d: %s: Illegal number: %s\n";
-
-					_fprintf(stderr, ms, n, a, b);
-					free(get_line_val);
-					free(cmd_args);
-					exit(2);
-				}
-
-				if (*endptr == '\0')
-				{
-					free(get_line_val);
-					free(cmd_args);
-					exit(status);
-				}
-				else
-				{
-					char *a = cmd_args[0];
-
-					char *b = cmd_args[1];
-
-					int n = 1;
-
-					char *ms = "./hsh: %d: %s: Illegal number: %s\n";
-
-					_fprintf(stderr, ms, n, a, b);
-					free(get_line_val);
-					free(cmd_args);
-					exit(2);
-				}
-			}
-			else
-			{
-				free(get_line_val);
-				free(cmd_args);
-				exit(0);
-			}
-		}
-
-		execute_builtin_command(cmd_args);
+		execute_builtin_command(cmd_args, get_line_val);
 
 		free(get_line_val);
 		free(cmd_args);
