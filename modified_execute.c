@@ -59,19 +59,19 @@ void call_and_execute(char *args[])
 	else
 	{
 		wait(&wt_status);
-	/**
-		do {
-			waitpid(pid_fork_val, &wt_status, 0);
+	/*
+	*	do {
+	*		waitpid(pid_fork_val, &wt_status, 0);
 
-			if (WIFEXITED(wt_status))
-			{
-				exit(WEXITSTATUS(wt_status));
-			}
-			if (WIFSIGNALED(wt_status))
-			{
-				raise(WTERMSIG(wt_status));
-			}
-		} while (WIFEXITED(wt_status) && WIFSIGNALED(wt_status));
+	*		if (WIFEXITED(wt_status))
+	*		{
+	*			exit(WEXITSTATUS(wt_status));
+	*		}
+	*		if (WIFSIGNALED(wt_status))
+	*		{
+	*			raise(WTERMSIG(wt_status));
+	*		}
+	*	} while (WIFEXITED(wt_status) && WIFSIGNALED(wt_status));
 	*/
 	}
 	
