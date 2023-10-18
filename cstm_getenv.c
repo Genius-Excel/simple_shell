@@ -28,7 +28,7 @@ char *cstm_getenv(char *env_name)
 
 		ln = _strlen(env_name);
 
-		if (strncmp(ent_env, env_name, ln) == 0 && ent_env[ln] == '=')
+		if (cstm_strncmp(ent_env, env_name, ln) == 0 && ent_env[ln] == '=')
 		{
 			return (&ent_env[ln + 1]);
 		}
