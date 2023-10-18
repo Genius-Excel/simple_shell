@@ -3,13 +3,15 @@
 /**
 * call_and_execute - Execute the given command and handle exit status
 * @args: Command line arguments to execute
+* @get_line_val: this is the getline value to be freed.
 */
 
-void call_and_execute(char *args[]);
+void call_and_execute(char *args[], char *get_line_val);
 
-void call_and_execute(char *args[])
+void call_and_execute(char *args[], char *get_line_val)
 {
 	pid_t pid_fork_val;
+
 	int wt_status;
 
 	pid_fork_val = fork();
@@ -17,6 +19,10 @@ void call_and_execute(char *args[])
 	if (pid_fork_val == -1) /* Potential error in creating a child */
 	{
 		perror("Fork Error");
+
+		free(get_line_val);
+		free(args);
+
 		exit(EXIT_FAILURE);
 	}
 
@@ -29,6 +35,8 @@ void call_and_execute(char *args[])
 			if (execve(args[0], args, environ) == -1)
 			{
 				perror("Error from execve");
+				free(get_line_val);
+				free(args);
 				exit(EXIT_FAILURE);
 			}
 		}
@@ -53,25 +61,26 @@ void call_and_execute(char *args[])
 				token = cstm_strtok(NULL, ":");
 			}
 			_fprintf(stderr, "./hsh: %d: %s: not found\n", 1, args[0]);
+			free(get_line_val);
+			free(args);
 			exit(127);
 		}
 	}
 	else
 	{
-		wait(&wt_status);
-	/*
-	*	do {
-	*		waitpid(pid_fork_val, &wt_status, 0);
+		do {
+			waitpid(pid_fork_val, &wt_status, 0);
 
-	*		if (WIFEXITED(wt_status))
-	*		{
-	*			exit(WEXITSTATUS(wt_status));
-	*		}
-	*		if (WIFSIGNALED(wt_status))
-	*		{
-	*			raise(WTERMSIG(wt_status));
-	*		}
-	*	} while (WIFEXITED(wt_status) && WIFSIGNALED(wt_status));
-	*/
+			if (WIFEXITED(wt_status))
+			{
+				free(get_line_val);
+				free(args);
+				exit(WEXITSTATUS(wt_status));
+			}
+			if (WIFSIGNALED(wt_status))
+			{
+				raise(WTERMSIG(wt_status));
+			}
+		} while (WIFEXITED(wt_status) && WIFSIGNALED(wt_status));
 	}
 }
