@@ -1,9 +1,9 @@
 #include "shell.h"
 
 /**
-* main - this is the main function for my shell program.
-* Return: 0 on sucess.
-*/
+ * main - this is the main function for my shell program.
+ * Return: 0 on sucess.
+ */
 
 int main(void);
 
@@ -58,7 +58,7 @@ int main(void)
 		/*Check if multiple commands were enetered*/
 		if (strstr(get_line_val, ";") != NULL)
 		{
-/*			cmd_seperator(get_line_val, currt_wrk_dir, usr_prmpt);*/
+			/*			cmd_seperator(get_line_val, currt_wrk_dir, usr_prmpt);*/
 
 			free(get_line_val);
 			continue;
@@ -94,6 +94,60 @@ int main(void)
 			free(cmd_args);
 
 			continue;
+		}
+
+		if (strcmp(cmd_args[0], "exit") == 0)
+		{
+			if (cmd_args[1] != NULL)
+			{
+				char *endptr;
+
+				long status = strtol(cmd_args[1], &endptr, 10);
+
+				if (strcmp(cmd_args[1], "-98") == 0)
+				{
+					char *a = cmd_args[0];
+
+					char *b = cmd_args[1];
+
+					int n = 1;
+
+					char *ms = "./hsh: %d: %s: Illegal number: %s\n";
+
+					_fprintf(stderr, ms, n, a, b);
+					free(get_line_val);
+					free(cmd_args);
+					exit(2);
+				}
+
+				if (*endptr == '\0')
+				{
+					free(get_line_val);
+					free(cmd_args);
+					exit(status);
+				}
+				else
+				{
+					char *a = cmd_args[0];
+
+					char *b = cmd_args[1];
+
+					int n = 1;
+
+					char *ms = "./hsh: %d: %s: Illegal number: %s\n";
+
+					_fprintf(stderr, ms, n, a, b);
+					free(get_line_val);
+					free(cmd_args);
+					exit(2);
+				}
+			}
+			else
+			{
+				free(get_line_val);
+				free(cmd_args);
+				exit(0);
+			}
 		}
 
 		execute_builtin_command(cmd_args);
