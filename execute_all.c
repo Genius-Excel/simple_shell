@@ -16,56 +16,7 @@ void execute_builtin_command(char **cmd_args)
 
 	char *file_path = "/bin/";
 
-	if (strcmp(cmd_args[0], "exit") == 0)
-	{
-		if (cmd_args[1] != NULL)
-		{
-			char *endptr;
-
-			long status = strtol(cmd_args[1], &endptr, 10);
-
-			if (strcmp(cmd_args[1], "-98") == 0)
-			{
-				char *a = cmd_args[0];
-
-				char *b = cmd_args[1];
-
-				int n = 1;
-
-				char *ms = "./hsh: %d: %s: Illegal number: %s\n";
-
-				_fprintf(stderr, ms, n, a, b);
-				free(cmd_args);
-				exit(2);
-			}
-
-			if (*endptr == '\0')
-			{
-				free(cmd_args);
-				exit(status);
-			}
-			else
-			{
-				char *a = cmd_args[0];
-
-				char *b = cmd_args[1];
-
-				int n = 1;
-
-				char *ms = "./hsh: %d: %s: Illegal number: %s\n";
-
-				_fprintf(stderr, ms, n, a, b);
-				free(cmd_args);
-				exit(2);
-			}
-		}
-		else
-		{
-			free(cmd_args);
-			exit(0);
-		}
-	}
-	else if (strcmp(cmd_args[0], "env") == 0)
+	if (strcmp(cmd_args[0], "env") == 0)
 	{
 		char **env;
 
