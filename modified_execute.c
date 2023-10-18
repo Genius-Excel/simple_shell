@@ -74,5 +74,4 @@ void call_and_execute(char *args[])
 	*	} while (WIFEXITED(wt_status) && WIFSIGNALED(wt_status));
 	*/
 	}
-	
 }
