@@ -45,5 +45,8 @@ void print_integer(int val);
 int _fprintf(FILE *stream, const char *format, ...);
 int _integer_length(int integer);
 
+/*String helper functions*/
+int cstm_strncmp(char *str1, char *str2, int num);
+
 
 #endif
