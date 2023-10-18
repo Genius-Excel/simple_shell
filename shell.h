@@ -20,14 +20,14 @@ extern char **environ;
 #define MAX_ARGS 1024
 
 /*Newly added functions*/
-void execute_builtin_command(char **cmd_args);
+void execute_builtin_command(char **cmd_args, char *get_line_val);
 int shell_setenv(const char *name, const char *value);
 int shell_unsetenv(const char *name);
 int shell_cd(const char *directory);
 
 
 /*Custom Function prototypes*/
-void call_and_execute(char *args[]);
+void call_and_execute(char *args[], char *get_line_val);
 char *cstm_getline(void);
 char *cstm_strtok(char *str, const char *delim);
 char *cstm_non_interactive_getline(void);
